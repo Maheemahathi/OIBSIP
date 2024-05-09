@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calculator using HTML Example</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background: #2d3436; 
+        }
+        .container {
+            width: auto;
+            margin: 20px auto; 
+            color: black;
+            text-align: center; 
+        }
+        .calc-body {
+            width: 275px;
+            margin: auto;
+            min-height: 400px;
+            border: solid 1px #3A4655;
+            box-shadow: 0 8px 50px -7px black;
+            background-color: #ecedef; 
+            padding: 10px; 
+            border-radius: 10px; 
+        }
+        .calc-screen {
+            background: #3A4655;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px; 
+            margin-bottom: 10px; 
+        }
+        .calc-operation {
+            text-align: right;
+            font-size: 21px;
+            padding-bottom: 10px;
+            border-bottom: dotted 1px #fff;
+        }
+        .calc-typed {
+            font-size: 45px;
+            text-align: right;
+        }
+        .calc-button-row {
+            display: flex;
+            justify-content: space-between; 
+        }
+        .button {
+            width: 23%; 
+            background: #425062;
+            color: #fff;
+            padding: 20px;
+            font-size: 25px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .button:hover {
+            background: #34495e; 
+        }
+        .button.c {
+            background: #d9534f; 
+        }
+        .button.c:hover {
+            background: #c9302c; 
+        }
+        .button.l {
+            background: #5bc0de; 
+        }
+        .button.l:hover {
+            background: #46b8da; 
+        }
+        .blink-me {
+            animation: blinker 1s linear infinite; 
+        }
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+        .title {
+            margin-bottom: 20px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #AEB3BA;
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title">Calculator</div>
+    <div class="calc-body">
+        <div class="calc-screen">
+            <div class="calc-operation" id="calc-operation"></div>
+            <div class="calc-typed" id="calc-typed">0<span class="blink-me">_</span></div>
+        </div>
+        <div class="calc-button-row">
+            <div class="button c" onclick="clearInput()">C</div>
+            <div class="button" onclick="appendToInput('%')">%</div>
+            <div class="button" onclick="backspace()">&#8592;</div>
+            <div class="button l" onclick="appendToInput('/')">/</div>
+        </div>
+        <div class="calc-button-row">
+            <div class="button" onclick="appendToInput('7')">7</div>
+            <div class="button" onclick="appendToInput('8')">8</div>
+            <div class="button" onclick="appendToInput('9')">9</div>
+            <div class="button l" onclick="appendToInput('*')">x</div>
+        </div>
+        <div class="calc-button-row">
+            <div class="button" onclick="appendToInput('4')">4</div>
+            <div class="button" onclick="appendToInput('5')">5</div>
+            <div class="button" onclick="appendToInput('6')">6</div>
+            <div class="button l" onclick="appendToInput('-')">-</div>
+        </div>
+        <div class="calc-button-row">
+            <div class="button" onclick="appendToInput('1')">1</div>
+            <div class="button" onclick="appendToInput('2')">2</div>
+            <div class="button" onclick="appendToInput('3')">3</div>
+            <div class="button l" onclick="appendToInput('+')">+</div>
+        </div>
+        <div class="calc-button-row">
+            <div class="button" onclick="appendToInput('.')">.</div>
+            <div class="button" onclick="appendToInput('0')">0</div>
+            <div class="button c" onclick="calculate()">=</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let operation = "";
+    let typed = "0";
+
+    function appendToInput(value) {
+        if (typed === "0") {
+            typed = "";
+        }
+        typed += value;
+        document.getElementById('calc-typed').innerText = typed;
+    }
+
+    function clearInput() {
+        typed = "0";
+        document.getElementById('calc-operation').innerText = "";
+        document.getElementById('calc-typed').innerText = typed;
+    }
+
+    function backspace() {
+        typed = typed.slice(0, -1);
+        if (typed === "") {
+            typed = "0";
+        }
+        document.getElementById('calc-typed').innerText = typed;
+    }
+
+    function calculate() {
+        try {
+            const result = eval(typed);
+            operation = typed + " = ";
+            typed = result.toString();
+            document.getElementById('calc-operation').innerText = operation;
+            document.getElementById('calc-typed').innerText = typed;
+        } catch (error) {
+            document.getElementById('calc-operation').innerText = "Error!";
+            document.getElementById('calc-typed').innerText = "0";
+        }
+    }
+</script>
+
+</body>
+</html>
